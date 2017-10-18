@@ -1,0 +1,95 @@
+﻿.qisBackgroundIndex{
+	background:url('../customize/qis_background.png') #FFF no-repeat;
+	background-size: cover;
+}
+.qisBackground{
+	background:url('../customize/qis_header.png') #FFF repeat-x;
+}
+.noWanPic{
+	background:url('../../images/Model_product.png') center no-repeat;
+}
+.noWanEth{
+	margin-left: 300px;
+}
+.noWanUsb{
+	margin-left: 300px;
+}
+.desktop_applyBtn{
+	border: 2px solid #4E87CC;
+	background: #4E87CC;	
+}
+.desktop_abortBtn{
+	border: 2px solid #4E87CC;
+	background: #FFF;	
+	color: #4E87CC;
+}
+.ui-input-text input, .ui-input-search input{
+	border-color: #4E87CC;
+}
+#welcome_button{
+	background-color: #4E87CC;
+	border:1px solid #4E87CC;
+}
+#lyraSignin{
+	color: #4E87CC;
+}
+.pageDesc{
+	color: #000;
+}
+.mobileApply{
+	background: #4E87CC;
+}
+.mobileAbort{
+	background: #FFF;
+}
+.mobile_abortBtn{
+	color: #000;
+}
+.footer_mobile{
+	border-top: 3px solid #4E87CC;
+}
+.selectorTopContainer{
+	color: #999;
+}
+.textInput{
+	height: 55px;
+	background: #FFF;
+	border: 0px solid;
+	border-bottom: 1px solid #777;
+	color: #000;
+	border-radius: 0px;
+}
+.inputTitle{
+	color: #888;
+}
+.optionInput{
+	background: #FFF;
+	color: #000;
+}
+.descInput{
+	color: #000;
+}
+.tos{
+    color: #000;
+}
+.tosDesc{
+	color: #555;
+}
+.cssload-circle .cssload-inner {
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	border: 5px solid rgba(0,122,255,0.7);
+	border-right: none;
+	border-top: none;
+	background-clip: padding;
+	box-shadow: inset 0px 0px 10px rgba(0,122,255,0.15);
+}
+.ap_ssid{
+	color: #888;
+}
+@media screen and (min-width: 1000px){
+	.desktop_left_field{
+		color: #4E87CC;
+	}
+}
