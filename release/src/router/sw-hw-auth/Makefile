@@ -21,7 +21,7 @@ ifeq ($(RTCONFIG_QTN),y)
 LDFLAGS += -L$(TOP)/libqcsapi_client -lqcsapi_client
 endif
 
-OBJS = auth.o hw_auth.o
+OBJS = sw_auth.o hw_auth.o
 
 all :
 
