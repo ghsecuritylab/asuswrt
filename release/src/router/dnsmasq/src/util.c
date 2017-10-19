@@ -162,13 +162,11 @@ static int check_name(char *in)
    for the tighter criteria. */
 int legal_hostname(char *name)
 {
-  char c, *at;
+  char c;
   int first;
 
   if (!check_name(name))
     return 0;
-
-  at = strchr(name, '@');
 
   for (first = 1; (c = *name); name++, first = 0)
     /* check for legal char a-z A-Z 0-9 - _ . */
@@ -179,10 +177,6 @@ int legal_hostname(char *name)
 	continue;
 
       if (!first && (c == '-' || c == '_'))
-	continue;
-
-      /* relax name part */
-      if (at && (name <= at) && (c >= 33) && (c < 127))
 	continue;
       
       /* end of hostname part */
@@ -206,18 +200,20 @@ char *canonicalise(char *in, int *nomem)
   if (!(rc = check_name(in)))
     return NULL;
   
-#if defined(HAVE_IDN) || defined(HAVE_LIBIDN2)
-  /* libidn2 strips underscores, so don't do IDN processing
+#if defined(HAVE_LIBIDN2) && (!defined(IDN2_VERSION_NUMBER) || IDN2_VERSION_NUMBER < 0x02000003)
+  /* older libidn2 strips underscores, so don't do IDN processing
      if the name has an underscore (check_name() returned 2) */
   if (rc != 2)
+#endif
+#if defined(HAVE_IDN) || defined(HAVE_LIBIDN2)
     {
-#ifdef HAVE_LIBIDN2
+#  ifdef HAVE_LIBIDN2
       rc = idn2_to_ascii_lz(in, &ret, IDN2_NONTRANSITIONAL);
       if (rc == IDN2_DISALLOWED)
 	rc = idn2_to_ascii_lz(in, &ret, IDN2_TRANSITIONAL);
-#else
+#  else
       rc = idna_to_ascii_lz(in, &ret, 0);
-#endif
+#  endif
       if (rc != IDNA_SUCCESS)
 	{
 	  if (ret)
@@ -244,15 +240,20 @@ char *canonicalise(char *in, int *nomem)
   return ret;
 }
 
-unsigned char *do_rfc1035_name(unsigned char *p, char *sval)
+unsigned char *do_rfc1035_name(unsigned char *p, char *sval, char *limit)
 {
   int j;
   
   while (sval && *sval)
     {
+      if (limit && p + 1 > (unsigned char*)limit)
+        return p;
+
       unsigned char *cp = p++;
       for (j = 0; *sval && (*sval != '.'); sval++, j++)
 	{
+          if (limit && p + 1 > (unsigned char*)limit)
+            return p;
 #ifdef HAVE_DNSSEC
 	  if (option_bool(OPT_DNSSEC_VALID) && *sval == NAME_ESCAPE)
 	    *p++ = (*(++sval))-1;
